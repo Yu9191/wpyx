@@ -1,0 +1,15 @@
+#!name = 王派医学
+#!desc = 支持版本: 26.05.13
+#!author = @ios151
+#!homepage = https://github.com/Yu9191/wpyx
+#!icon = https://api.iconify.design/twemoji/medical-symbol.svg
+
+[Argument]
+logLevel = select,off,error,warn,info,debug,all,tag=日志级别,desc=日志级别,default=info
+worker = input,tag=Worker地址,desc=已部署的 wpyx-unlock Cloudflare Worker URL,default=https://wpyx-unlock.lovebabyforever.workers.dev,placeholder=https://wpyx-unlock.lovebabyforever.workers.dev
+
+[MITM]
+hostname = api-app.wangpaiyixue.cn, api-app-v2.wangpaiyixue.cn
+
+[Script]
+http-response ^https?:\/\/api-app(-v2)?\.wangpaiyixue\.cn\/v\d+\/(common\/ac|goods\/(detail|lists|section_info)|video\/vid_token) requires-body=true, max-size=-1, timeout=20, tag=王派医学, script-path=https://raw.githubusercontent.com/Yu9191/wpyx/main/wpyx.js, argument=worker={{{worker}}}&logLevel={{{logLevel}}}
